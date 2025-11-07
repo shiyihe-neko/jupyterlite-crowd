@@ -1,0 +1,2 @@
+jupyterlite==0.6.4
+jupyterlab==4.2.5

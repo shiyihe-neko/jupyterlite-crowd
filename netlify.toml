@@ -1,14 +1,7 @@
 [build]
-  command = ""
+  command = "pip install jupyterlite jupyterlab && jupyter lite build --config lite/jupyter_lite_config.json --contents lite/files --output-dir dist --apps lab,tree,repl,edit --force"
   publish = "dist"
-  functions = ""
+  environment = { PYTHONUNBUFFERED = "1", PIP_DISABLE_PIP_VERSION_CHECK = "1" }
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
+[[plugins]]
+  package = "@netlify/plugin-python"
