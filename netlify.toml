@@ -1,9 +1,14 @@
 [build]
-  command = ""          # 不执行构建命令
-  publish = "dist"      # 直接发布 dist 目录
+  command = ""
+  publish = "dist"
+  functions = ""
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
