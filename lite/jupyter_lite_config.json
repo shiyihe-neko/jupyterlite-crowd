@@ -2,6 +2,6 @@
   "LiteBuildConfig": {
     "output_dir": "./dist",
     "contents": ["./lite/files"],
-    "apps": ["lab"]
+    "apps": ["lab", "tree", "repl", "edit"]
   }
 }
