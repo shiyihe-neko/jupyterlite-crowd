@@ -1,20 +1,9 @@
-# === Netlify Configuration ===
-
 [build]
-# 根目录执行构建命令
-command = "jupyter lite build --contents lite/files --output-dir dist --force"
-publish = "dist"
+  command = ""          # 不执行构建命令
+  publish = "dist"      # 直接发布 dist 目录
 
-# 可选：若你之后添加 functions，可以放在这里
-# functions = "netlify/functions"
-
-[build.environment]
-PYTHON_VERSION = "3.12"
-NODE_VERSION = "20"
-BACKEND_URL = "https://jupyterlite-crowd.onrender.com"  # 你的 Flask 后端地址
-
-# === Optional Redirects (解决刷新404问题) ===
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
