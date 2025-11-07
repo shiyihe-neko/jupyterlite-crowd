@@ -2,7 +2,7 @@
   command = """
   pip install -U jupyterlite-core jupyterlite-pyodide-kernel jupyterlite-jupyterlab &&
   jupyter lite build --config lite/jupyter_lite_config.json --contents lite/files --output-dir dist --apps lab,tree,repl,edit &&
-  cp _redirects dist/
+  cp _redirects dist/ || true
   """
   publish = "dist"
 
@@ -10,6 +10,3 @@
   PYTHON_VERSION = "3.12"
   PIP_DISABLE_PIP_VERSION_CHECK = "1"
   PYTHONUNBUFFERED = "1"
-
-[[plugins]]
-  package = "@netlify/plugin-python"
