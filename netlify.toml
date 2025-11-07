@@ -1,6 +1,7 @@
 [build]
   command = """
   pip install -U jupyterlite-core jupyterlite-pyodide-kernel jupyterlite-jupyterlab &&
+  mkdir -p dist &&
   jupyter lite build --config lite/jupyter_lite_config.json --contents lite/files --output-dir dist --apps lab,tree,repl,edit &&
   cp _redirects dist/ || true
   """
