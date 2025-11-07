@@ -1,0 +1,40 @@
+# --- Python Virtual Envs ---
+.venv/
+.venv312/
+venv/
+ENV/
+env/
+
+# --- Python build caches ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.log
+
+# --- Jupyter / Lite build caches ---
+.jupyterlite.doit.db
+.lite/
+.jupyterlite_config.json
+.cache/
+.ipynb_checkpoints/
+
+# --- Build outputs ---
+dist/
+_output/
+build/
+archive/
+*.tgz
+
+# --- OS / Editor temp files ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Render / Netlify temporary files ---
+*.bak
+*.old
+.env
+
+backend/saved_results/
+saved_results/

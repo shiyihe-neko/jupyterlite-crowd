@@ -1,0 +1,12 @@
+
+[build]
+  command = "jupyter lite build --contents lite/files --output-dir dist"
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.9"
+
+[[redirects]]
+  from = "/"
+  to = "/lab?path=files/tasks/task.ipynb"
+  status = 200

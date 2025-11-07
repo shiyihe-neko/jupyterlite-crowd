@@ -1,0 +1,26 @@
+# render.yaml — Flask backend deployment for JupyterLite Crowd
+# Author: Shiyi He
+
+services:
+  - type: web
+    name: jupyterlite-backend
+    env: python
+    region: oregon  # 可选：也可以改成 singapore、frankfurt 等更近的节点
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: python backend/app.py
+    autoDeploy: true
+
+    # ✅ 环境变量设置
+    envVars:
+      - key: SAVE_DIR
+        value: saved_results  # 上传文件保存的根目录
+
+    # ✅ 挂载持久化磁盘（1GB 免费）
+    disk:
+      name: backend-data
+      mountPath: /opt/render/project/src/saved_results
+      sizeGB: 1
+
+    # ✅ 自动分配端口
+    envSpecificDetails:
+      pythonVersion: 3.12.3
