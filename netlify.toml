@@ -1,14 +1,6 @@
 [build]
-  command = """
-  pip install -U jupyterlite==0.6.4 jupyterlite-core==0.6.4 &&
-  pip install git+https://github.com/jupyterlite/pyodide-kernel.git@main &&
-  mkdir -p dist &&
-  python -m jupyterlite build --config lite/jupyter_lite_config.json --contents lite/files --output-dir dist --apps lab,tree,repl,edit &&
-  echo '/* /index.html 200' > dist/_redirects
-  """
-  publish = "dist"
+# 只部署已经构建好的 dist/
+publish = "dist"
 
-[build.environment]
-  PYTHON_VERSION = "3.11"
-  PIP_DISABLE_PIP_VERSION_CHECK = "1"
-  PYTHONUNBUFFERED = "1"
+# 不在云端重新 build，只做静态托管
+command = "echo 'Using prebuilt JupyterLite dist'"
