@@ -1,7 +1,8 @@
 [build]
   command = "pip install jupyterlite jupyterlab && jupyter lite build --config lite/jupyter_lite_config.json --contents lite/files --output-dir dist --apps lab,tree,repl,edit --force"
   publish = "dist"
-  environment = { PYTHONUNBUFFERED = "1", PIP_DISABLE_PIP_VERSION_CHECK = "1" }
 
-[[plugins]]
-  package = "@netlify/plugin-python"
+[build.environment]
+  PYTHONUNBUFFERED = "1"
+  PIP_DISABLE_PIP_VERSION_CHECK = "1"
+  PYTHON_VERSION = "3.12.0"
