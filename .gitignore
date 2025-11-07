@@ -19,7 +19,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 # --- Build outputs ---
-dist/
+# dist/
 _output/
 build/
 archive/

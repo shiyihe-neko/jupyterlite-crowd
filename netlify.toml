@@ -1,12 +1,34 @@
+# ===========================
+# Netlify configuration file
+# ===========================
 
 [build]
-  command = "jupyter lite build --contents lite/files --output-dir dist"
-  publish = "dist"
+# 指定前端子目录
+base = "frontend"
+
+# 构建命令
+command = "jupyter lite build --config jupyter_lite_config.json --output-dir dist --force"
+
+# 构建结果目录（Netlify 将发布这里的内容）
+publish = "frontend/dist"
+
+# 不需要 serverless functions
+functions = ""
 
 [build.environment]
-  PYTHON_VERSION = "3.9"
+# 使用 Python 3.12（或你本地使用的版本）
+PYTHON_VERSION = "3.12"
+# 如果后续要加前后端通信，也可以设置后端 URL
+BACKEND_URL = "https://jupyterlite-crowd.onrender.com"
 
+# 可选: 提高构建缓存效率
+NODE_ENV = "production"
+
+# ===========================
+# Redirect rules
+# ===========================
+# 让所有路径都能正确路由到 index.html
 [[redirects]]
-  from = "/"
-  to = "/lab?path=files/tasks/task.ipynb"
-  status = 200
+from = "/*"
+to = "/index.html"
+status = 200

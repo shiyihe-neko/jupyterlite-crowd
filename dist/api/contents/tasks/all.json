@@ -1,0 +1,43 @@
+{
+  "content": [
+    {
+      "content": null,
+      "created": "2025-11-07T02:54:46.605499Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-11-05T05:14:48Z",
+      "mimetype": null,
+      "name": "task.ipynb",
+      "path": "tasks/task.ipynb",
+      "size": 2740,
+      "type": "notebook",
+      "writable": true
+    },
+    {
+      "content": null,
+      "created": "2025-11-07T02:54:46.607055Z",
+      "format": null,
+      "hash": null,
+      "hash_algorithm": null,
+      "last_modified": "2025-11-07T02:22:40.925582Z",
+      "mimetype": null,
+      "name": "task_2.ipynb",
+      "path": "tasks/task_2.ipynb",
+      "size": 4150,
+      "type": "notebook",
+      "writable": true
+    }
+  ],
+  "created": "2025-11-07T02:54:46.606130Z",
+  "format": "json",
+  "hash": null,
+  "hash_algorithm": null,
+  "last_modified": "2025-11-07T02:54:46.606130Z",
+  "mimetype": null,
+  "name": "tasks",
+  "path": "tasks",
+  "size": null,
+  "type": "directory",
+  "writable": true
+}
