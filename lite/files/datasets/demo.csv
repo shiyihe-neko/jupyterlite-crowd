@@ -1,5 +1,5 @@
 Name,Department,Salary,YearsExperience
-Alice,HR,70000,3
+Alice,HR,,3
 Bob,Engineering,95000,7
 Charlie,Engineering,88000,5
 Diana,Marketing,64000,2
