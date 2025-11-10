@@ -1,0 +1,10 @@
+{
+  "jupyter-config-data": {
+    "settingsOverrides": {
+      "@jupyterlab/docmanager-extension:plugin": {
+        "autosave": true,
+        "autosaveInterval": 1
+      }
+    }
+  }
+}
