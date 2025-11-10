@@ -1,7 +1,15 @@
 {
   "LiteBuildConfig": {
-    "output_dir": "./dist",
-    "contents": ["./lite/files"],
+    "output_dir": "../dist",
+    "contents": ["../lite/files"],
     "apps": ["lab", "tree", "repl", "edit"]
+  },
+  "jupyter-config-data": {
+    "settingsOverrides": {
+      "@jupyterlab/docmanager-extension:plugin": {
+        "autosave": true,
+        "autosaveInterval": 1
+      }
+    }
   }
 }
