@@ -1,53 +1,39 @@
-import os
 import requests
-from tqdm import tqdm
+import os
+import time
+import math
 
+def estimate_time(size_bytes):
+    size_mb = size_bytes / (1024 * 1024)
+    return max(5, int(size_mb * 3)) 
 
 def upload_to_backend(file_path, participant_id, kind="data"):
     """
-    Upload file (CSV or notebook) to backend with progress bar.
+    Upload file (CSV or notebook) to backend with clean progress output.
     """
+    file_name = os.path.basename(file_path)
 
     url = {
         "data": "https://jupyterlite-crowd.onrender.com/upload_file",
         "notebook": "https://jupyterlite-crowd.onrender.com/upload_notebook",
     }[kind]
 
-    file_size = os.path.getsize(file_path)
+    size_bytes = os.path.getsize(file_path)
+    eta = estimate_time(size_bytes)
 
-    # tqdm progress bar
-    progress = tqdm(
-        total=file_size,
-        unit="B",
-        unit_scale=True,
-        unit_divisor=1024,
-        desc=f"Uploading {os.path.basename(file_path)}"
-    )
+    print(f"Uploading {file_name}...")
+    print(f"Estimated time: ~{eta} seconds")
 
-    class ProgressFileWrapper:
-        def __init__(self, fileobj):
-            self.file = fileobj
-            self.read_bytes = 0
-
-        def read(self, size=-1):
-            chunk = self.file.read(size)
-            if chunk:
-                progress.update(len(chunk))
-            return chunk
-
-        def __getattr__(self, attr):
-            return getattr(self.file, attr)
 
     with open(file_path, "rb") as f:
-        wrapped_file = ProgressFileWrapper(f)
+        res = requests.post(url, files={"file": f}, data={"participant_id": participant_id})
 
-        res = requests.post(
-            url,
-            files={"file": wrapped_file},
-            data={"participant_id": participant_id}
-        )
+    if res.status_code == 200:
+        print(f"✔ {file_name} upload complete!\n")
+    else:
+        print(f"✘ Upload failed for {file_name}. Status: {res.status_code}\n")
 
-    progress.close()
-
-    print(f"✔ Upload {kind} complete! Status: {res.status_code}")
-    return res.json()
+    try:
+        return res.json().get("path", None)
+    except:
+        return None
