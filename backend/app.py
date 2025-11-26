@@ -660,30 +660,24 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.oauth2.credentials import Credentials
 import os, datetime, werkzeug, pathlib
-import traceback # ⬅️ 【改动 1】导入 traceback
+import traceback 
 
 app = Flask(__name__)
 CORS(app)
 
-# ==============================
-# ✅ 配置路径
-# ==============================
 BASE_DIR = os.environ.get("SAVE_DIR", "saved_results")
 DATA_DIR = os.path.join(BASE_DIR, "data")
 NB_DIR = os.path.join(BASE_DIR, "notebooks")
 os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(NB_DIR, exist_ok=True)
 
-# ==============================
-# ✅ Google Drive 配置
-# ==============================
+
 CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 REFRESH_TOKEN = os.getenv("GOOGLE_REFRESH_TOKEN")
-FOLDER_ID = os.getenv("GOOGLE_DRIVE_FOLDER_ID", None)  # 可选，Drive 文件夹 ID
+FOLDER_ID = os.getenv("GOOGLE_DRIVE_FOLDER_ID", None)  
 
 def get_drive_service():
-    """创建 Drive API 客户端"""
     creds = Credentials(
         None,
         refresh_token=REFRESH_TOKEN,
@@ -695,7 +689,6 @@ def get_drive_service():
     return build("drive", "v3", credentials=creds)
 
 def upload_to_drive(local_path, participant_id):
-    """上传文件到 Google Drive"""
     service = get_drive_service()
     filename = os.path.basename(local_path)
 
@@ -705,12 +698,9 @@ def upload_to_drive(local_path, participant_id):
 
     media = MediaFileUpload(local_path, resumable=True)
     file = service.files().create(body=metadata, media_body=media, fields="id, webViewLink").execute()
-    print(f"☁️ Uploaded to Drive: {file['id']} → {file['webViewLink']}")
+    print(f" Uploaded to Drive: {file['id']} → {file['webViewLink']}")
     return file["webViewLink"]
 
-# ==============================
-# ✅ 工具函数
-# ==============================
 def safe_name(s):
     return "".join(c for c in s if c.isalnum() or c in ('-', '_'))
 
@@ -734,9 +724,6 @@ def save_uploaded_file(file, participant_id, kind="data"):
     print(f"✅ Saved {filename} to {save_path}")
     return save_path
 
-# ==============================
-# ✅ 首页（API概览）
-# ==============================
 @app.route("/")
 def index():
     return render_template_string("""
@@ -754,9 +741,6 @@ def index():
 def health():
     return {"status": "ok"}
 
-# ==============================
-# ✅ 上传 CSV + 同步到 Google Drive
-# ==============================
 @app.route("/upload_file", methods=["POST"])
 def upload_file():
     f = request.files.get("file")
@@ -769,8 +753,8 @@ def upload_file():
         drive_link = upload_to_drive(local_path, pid)
     except Exception as e:
         drive_link = None
-        print(f"❌ Drive upload failed: {e}")
-        traceback.print_exc() # ⬅️ 【改动 2】打印堆栈
+        print(f"Drive upload failed: {e}")
+        traceback.print_exc()
         
     return jsonify({
         "status": "ok",
@@ -778,9 +762,7 @@ def upload_file():
         "drive_link": drive_link
     })
 
-# ==============================
-# ✅ 上传 Notebook + 同步到 Google Drive
-# ==============================
+
 @app.route("/upload_notebook", methods=["POST"])
 def upload_notebook():
     f = request.files.get("file")
@@ -793,8 +775,8 @@ def upload_notebook():
         drive_link = upload_to_drive(local_path, pid)
     except Exception as e:
         drive_link = None
-        print(f"❌ Drive upload failed: {e}")
-        traceback.print_exc() # ⬅️ 【改动 2】打印堆栈
+        print(f"Drive upload failed: {e}")
+        traceback.print_exc() 
         
     return jsonify({
         "status": "ok",
@@ -802,9 +784,7 @@ def upload_notebook():
         "drive_link": drive_link
     })
 
-# ==============================
-# ✅ 文件浏览和下载（保留原逻辑）
-# ==============================
+
 def _list_dirs(path):
     p = pathlib.Path(path)
     return sorted([d.name for d in p.iterdir() if d.is_dir()])
@@ -840,9 +820,7 @@ def download(kind, participant, filename):
     folder = os.path.join(base, participant)
     return send_from_directory(folder, filename, as_attachment=False)
 
-# ==============================
-# ✅ 启动
-# ==============================
+
 if __name__ == "__main__":
     print("\n🚀 Backend with Google Drive Sync running:")
     print("  🔗 http://127.0.0.1:5050")
