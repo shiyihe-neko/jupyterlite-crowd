@@ -1,24 +1,42 @@
+# [build]
+#   publish = "dist"
+#   command = "pip install -r requirements.txt && jupyter lite build --apps lab --contents lite/files --output-dir dist --force"
+
+# [build.environment]
+#   PYTHON_VERSION = "3.11"
+
+# [[headers]]
+#   for = "/*.js"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
+
+# [[headers]]
+#   for = "/build/*.js"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
+
+# [[headers]]
+#   for = "/*.mjs"
+#   [headers.values]
+#     Content-Type = "application/javascript; charset=utf-8"
+
+# [[headers]]
+#   for = "/*.wasm"
+#   [headers.values]
+#     Content-Type = "application/wasm"
 [build]
   publish = "dist"
-  command = "pip install -r requirements.txt && jupyter lite build --apps lab --contents lite/files --output-dir dist --force"
+  command = "pip install -r requirements.txt && jupyter lite build --contents lite/files --output-dir dist"
 
 [build.environment]
   PYTHON_VERSION = "3.11"
 
 [[headers]]
-  for = "/*.js"
+  for = "/*"
   [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-
-[[headers]]
-  for = "/build/*.js"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
-
-[[headers]]
-  for = "/*.mjs"
-  [headers.values]
-    Content-Type = "application/javascript; charset=utf-8"
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "require-corp"
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/*.wasm"
